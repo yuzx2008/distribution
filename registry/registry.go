@@ -21,15 +21,12 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
 
 	"github.com/distribution/distribution/v3/configuration"
 	"github.com/distribution/distribution/v3/health"
 	"github.com/distribution/distribution/v3/internal/dcontext"
 	"github.com/distribution/distribution/v3/registry/handlers"
 	"github.com/distribution/distribution/v3/registry/listener"
-	"github.com/distribution/distribution/v3/tracing"
 	"github.com/distribution/distribution/v3/version"
 )
 
@@ -163,6 +160,7 @@ func NewRegistry(ctx context.Context, config *configuration.Configuration) (*Reg
 		handler = applyHandlerMiddleware(config, handler)
 	}
 
+	/*
 	err = tracing.InitOpenTelemetry(app.Context)
 	if err != nil {
 		return nil, fmt.Errorf("error during open telemetry initialization: %v", err)
@@ -171,6 +169,7 @@ func NewRegistry(ctx context.Context, config *configuration.Configuration) (*Reg
 		handler = h2c.NewHandler(handler, &http2.Server{})
 	}
 	handler = otelHandler(handler)
+	*/
 
 	server := &http.Server{
 		Handler: handler,
